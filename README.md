@@ -9,7 +9,14 @@ To start your Phoenix server:
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+# Deployment
+The app is automatically deployed to Render.com at every push to the master branch.
+
+### Migrations
+To run migrations on the deployment, run the following command from within Render's console:
+```
+_build/prod/rel/blanks/bin/blanks eval "Blanks.Release.migrate"
+```
 
 ## Learn more
 
