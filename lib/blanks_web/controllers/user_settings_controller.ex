@@ -4,10 +4,12 @@ defmodule BlanksWeb.UserSettingsController do
   alias Blanks.Accounts
   alias BlanksWeb.UserAuth
 
+  @page_title "User settings"
+
   plug :assign_email_and_password_changesets
 
   def edit(conn, _params) do
-    render(conn, "edit.html")
+    render(conn, "edit.html", page_title: @page_title)
   end
 
   def update_email(conn, %{"current_password" => password, "user" => user_params}) do
@@ -29,7 +31,7 @@ defmodule BlanksWeb.UserSettingsController do
         |> redirect(to: Routes.user_settings_path(conn, :edit))
 
       {:error, changeset} ->
-        render(conn, "edit.html", email_changeset: changeset)
+        render(conn, "edit.html", email_changeset: changeset, page_title: @page_title)
     end
   end
 
@@ -58,7 +60,7 @@ defmodule BlanksWeb.UserSettingsController do
         |> UserAuth.login_user(user)
 
       {:error, changeset} ->
-        render(conn, "edit.html", password_changeset: changeset)
+        render(conn, "edit.html", password_changeset: changeset, page_title: @page_title)
     end
   end
 

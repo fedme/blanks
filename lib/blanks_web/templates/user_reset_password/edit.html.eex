@@ -1,5 +1,3 @@
-<h1>Reset password</h1>
-
 <%= form_for @changeset, Routes.user_reset_password_path(@conn, :update, @token), fn f -> %>
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
@@ -7,20 +5,20 @@
     </div>
   <% end %>
 
-  <%= label f, :password, "New password" %>
-  <%= password_input f, :password, required: true %>
-  <%= error_tag f, :password %>
+  <%= label f, :password, "New password", class: "block mb-2" %>
+  <%= password_input f, :password, required: true,  class: "form-input w-full lg:w-1/2 my-1" %>
+  <div class="block mt-4"><%= error_tag f, :password %></div>
 
-  <%= label f, :password_confirmation, "Confirm new password" %>
-  <%= password_input f, :password_confirmation, required: true %>
-  <%= error_tag f, :password_confirmation %>
+  <%= label f, :password_confirmation, "Confirm new password", class: "block py-2" %>
+  <%= password_input f, :password_confirmation, required: true,  class: "form-input w-full lg:w-1/2 my-1" %>
+  <div class="block mt-4"><%= error_tag f, :password_confirmation %></div>
 
   <div>
-    <%= submit "Reset password" %>
+    <%= submit "Reset password", class: "mb-4 mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
   </div>
 <% end %>
 
-<p>
-  <%= link "Register", to: Routes.user_registration_path(@conn, :new) %> |
-  <%= link "Login", to: Routes.user_session_path(@conn, :new) %>
+<p class="mt-2">
+  <%= link "Register", to: Routes.user_registration_path(@conn, :new), class: "hover:text-blue-500" %> |
+  <%= link "Login", to: Routes.user_session_path(@conn, :new), class: "hover:text-blue-500" %>
 </p>

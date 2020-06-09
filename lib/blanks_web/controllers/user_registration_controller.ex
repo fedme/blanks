@@ -5,9 +5,11 @@ defmodule BlanksWeb.UserRegistrationController do
   alias Blanks.Accounts.User
   alias BlanksWeb.UserAuth
 
+  @page_title "Register"
+
   def new(conn, _params) do
     changeset = Accounts.change_user_registration(%User{})
-    render(conn, "new.html", changeset: changeset)
+    render(conn, "new.html", changeset: changeset, page_title: @page_title)
   end
 
   def create(conn, %{"user" => user_params}) do
@@ -24,7 +26,7 @@ defmodule BlanksWeb.UserRegistrationController do
         |> UserAuth.login_user(user)
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        render(conn, "new.html", changeset: changeset, page_title: @page_title)
     end
   end
 end

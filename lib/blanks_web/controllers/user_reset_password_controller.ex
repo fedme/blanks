@@ -3,10 +3,12 @@ defmodule BlanksWeb.UserResetPasswordController do
 
   alias Blanks.Accounts
 
+  @page_title "Forgot Password?"
+
   plug :get_user_by_reset_password_token when action in [:edit, :update]
 
   def new(conn, _params) do
-    render(conn, "new.html")
+    render(conn, "new.html", page_title: @page_title)
   end
 
   def create(conn, %{"user" => %{"email" => email}}) do
@@ -27,7 +29,7 @@ defmodule BlanksWeb.UserResetPasswordController do
   end
 
   def edit(conn, _params) do
-    render(conn, "edit.html", changeset: Accounts.change_user_password(conn.assigns.user))
+    render(conn, "edit.html", changeset: Accounts.change_user_password(conn.assigns.user), page_title: @page_title)
   end
 
   # Do not login the user after reset password to avoid a
@@ -40,7 +42,7 @@ defmodule BlanksWeb.UserResetPasswordController do
         |> redirect(to: Routes.user_session_path(conn, :new))
 
       {:error, changeset} ->
-        render(conn, "edit.html", changeset: changeset)
+        render(conn, "edit.html", changeset: changeset, page_title: "Reset Password")
     end
   end
 
