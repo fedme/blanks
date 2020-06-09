@@ -37,7 +37,7 @@ window.liveSocket = liveSocket
 // Desktop User Menu open/close state
 const userMenu = document.getElementById('user-menu')
 const userMenuButton = document.getElementById('user-menu-button')
-userMenuButton.addEventListener('click', (e) => {
+userMenuButton && userMenuButton.addEventListener('click', (e) => {
     e.stopPropagation()
     // if menu is open, close it
     if (userMenu.classList.contains('block')) {
@@ -61,7 +61,7 @@ const mobileMenu = document.getElementById('mobile-menu')
 const mobileMenuButton = document.getElementById('mobile-menu-button')
 const mobileMenuButtonOpen = document.getElementById('mobile-menu-button-open')
 const mobileMenuButtonClose = document.getElementById('mobile-menu-button-close')
-mobileMenuButton.addEventListener('click', (e) => {
+mobileMenuButton && mobileMenuButton.addEventListener('click', (e) => {
     // if menu is open, close it
     if (mobileMenu.classList.contains('block')) {
         mobileMenu.classList.replace('block', 'hidden')

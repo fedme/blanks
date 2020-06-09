@@ -65,12 +65,12 @@
               </div>
             </div>
 
-            <% else %>
-            <%= link "Login", to: Routes.user_session_path(@conn, :new), class: "text-white hover:text-blue-400" %>
-            <% end %>
-
-
           </div>
+
+          <% else %>
+            <%= link "Login", to: Routes.user_session_path(@conn, :new), class: "text-white hover:text-blue-400" %>
+          <% end %>
+
         </div>
       </div>
       <div class="-mr-2 flex md:hidden">
