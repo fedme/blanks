@@ -16,9 +16,17 @@ import "phoenix_html"
 import { Socket } from "phoenix"
 import NProgress from "nprogress"
 import { LiveSocket } from "phoenix_live_view"
+import "alpinejs"
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
-let liveSocket = new LiveSocket("/live", Socket, { params: { _csrf_token: csrfToken } })
+let liveSocket = new LiveSocket("/live", Socket, { 
+    dom: {
+        onBeforeElUpdated(from, to){
+          if(from.__x){ window.Alpine.clone(from.__x, to) }
+        }
+    },
+    params: { _csrf_token: csrfToken } 
+})
 
 // Show progress bar on live navigation and form submits
 window.addEventListener("phx:page-loading-start", info => NProgress.start())
@@ -31,47 +39,3 @@ liveSocket.connect()
 // >> liveSocket.enableDebug()
 // >> liveSocket.enableLatencySim(1000)
 window.liveSocket = liveSocket
-
-
-
-// Desktop User Menu open/close state
-const userMenu = document.getElementById('user-menu')
-const userMenuButton = document.getElementById('user-menu-button')
-userMenuButton && userMenuButton.addEventListener('click', (e) => {
-    e.stopPropagation()
-    // if menu is open, close it
-    if (userMenu.classList.contains('block')) {
-        userMenu.classList.replace('block', 'hidden')
-    }
-    // if menu is closed, open it
-    else {
-        userMenu.classList.replace('hidden', 'block')
-    }
-})
-window.addEventListener('click', (e) => {
-    if (event.target != userMenu) {
-        userMenu.classList.replace('block', 'hidden')
-    }
-});
-
-
-// Mobile Menu open/close state
-
-const mobileMenu = document.getElementById('mobile-menu')
-const mobileMenuButton = document.getElementById('mobile-menu-button')
-const mobileMenuButtonOpen = document.getElementById('mobile-menu-button-open')
-const mobileMenuButtonClose = document.getElementById('mobile-menu-button-close')
-mobileMenuButton && mobileMenuButton.addEventListener('click', (e) => {
-    // if menu is open, close it
-    if (mobileMenu.classList.contains('block')) {
-        mobileMenu.classList.replace('block', 'hidden')
-        mobileMenuButtonOpen.classList.replace('hidden', 'block')
-        mobileMenuButtonClose.classList.replace('block', 'hidden')
-    }
-    // if menu is closed, open it
-    else {
-        mobileMenu.classList.replace('hidden', 'block')
-        mobileMenuButtonOpen.classList.replace('block', 'hidden')
-        mobileMenuButtonClose.classList.replace('hidden', 'block')
-    }
-})
