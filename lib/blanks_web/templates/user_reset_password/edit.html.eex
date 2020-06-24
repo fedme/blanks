@@ -20,5 +20,5 @@
 
 <p class="mt-2">
   <%= link "Register", to: Routes.user_registration_path(@conn, :new), class: "hover:text-blue-500" %> |
-  <%= link "Login", to: Routes.user_session_path(@conn, :new), class: "hover:text-blue-500" %>
+  <%= link "Log in", to: Routes.user_session_path(@conn, :new), class: "hover:text-blue-500" %>
 </p>

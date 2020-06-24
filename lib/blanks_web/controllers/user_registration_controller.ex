@@ -23,7 +23,7 @@ defmodule BlanksWeb.UserRegistrationController do
 
         conn
         |> put_flash(:info, "User created successfully.")
-        |> UserAuth.login_user(user)
+        |> UserAuth.log_in_user(user)
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset, page_title: @page_title)

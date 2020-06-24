@@ -68,7 +68,7 @@
           </div>
 
           <% else %>
-            <%= link "Login", to: Routes.user_session_path(@conn, :new), class: "text-white hover:text-blue-400" %>
+            <%= link "Log in", to: Routes.user_session_path(@conn, :new), class: "text-white hover:text-blue-400" %>
           <% end %>
 
         </div>

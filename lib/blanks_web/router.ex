@@ -58,8 +58,8 @@ defmodule BlanksWeb.Router do
 
     get "/users/register", UserRegistrationController, :new
     post "/users/register", UserRegistrationController, :create
-    get "/users/login", UserSessionController, :new
-    post "/users/login", UserSessionController, :create
+    get "/users/log_in", UserSessionController, :new
+    post "/users/log_in", UserSessionController, :create
     get "/users/reset_password", UserResetPasswordController, :new
     post "/users/reset_password", UserResetPasswordController, :create
     get "/users/reset_password/:token", UserResetPasswordController, :edit
@@ -78,7 +78,7 @@ defmodule BlanksWeb.Router do
   scope "/", BlanksWeb do
     pipe_through [:browser]
 
-    delete "/users/logout", UserSessionController, :delete
+    delete "/users/log_out", UserSessionController, :delete
     get "/users/confirm", UserConfirmationController, :new
     post "/users/confirm", UserConfirmationController, :create
     get "/users/confirm/:token", UserConfirmationController, :confirm

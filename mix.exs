@@ -48,7 +48,7 @@ defmodule Blanks.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:phx_gen_auth, "~> 0.3.0", only: [:dev], runtime: false}
+      {:phx_gen_auth, "~> 0.4.0", only: [:dev], runtime: false}
     ]
   end
 
@@ -63,7 +63,8 @@ defmodule Blanks.MixProject do
       setup: ["deps.get", "ecto.setup", "cmd npm install --prefix assets"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"]
+      # test: ["ecto.migrate --quiet", "test"]
+      # test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"]
     ]
   end
 end

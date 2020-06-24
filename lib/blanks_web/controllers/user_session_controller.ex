@@ -4,7 +4,7 @@ defmodule BlanksWeb.UserSessionController do
   alias Blanks.Accounts
   alias BlanksWeb.UserAuth
 
-  @page_title "User login"
+  @page_title "User log in"
 
   def new(conn, _params) do
     render(conn, "new.html", error_message: nil, page_title: @page_title)
@@ -14,7 +14,7 @@ defmodule BlanksWeb.UserSessionController do
     %{"email" => email, "password" => password} = user_params
 
     if user = Accounts.get_user_by_email_and_password(email, password) do
-      UserAuth.login_user(conn, user, user_params)
+      UserAuth.log_in_user(conn, user, user_params)
     else
       render(conn, "new.html", error_message: "Invalid e-mail or password", page_title: @page_title)
     end
@@ -23,6 +23,6 @@ defmodule BlanksWeb.UserSessionController do
   def delete(conn, _params) do
     conn
     |> put_flash(:info, "Logged out successfully.")
-    |> UserAuth.logout_user()
+    |> UserAuth.log_out_user()
   end
 end

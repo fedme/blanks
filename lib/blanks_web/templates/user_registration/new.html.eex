@@ -6,7 +6,7 @@
   <% end %>
 
   <%= label f, :email, class: "block mb-2" %>
-  <%= text_input f, :email, required: true, class: "form-input w-full lg:w-1/2 my-1" %>
+  <%= email_input f, :email, required: true, class: "form-input w-full lg:w-1/2 my-1" %>
   <div class="block mt-4"><%= error_tag f, :email %></div>
 
   <%= label f, :password, class: "block py-2 mt-4" %>
@@ -20,6 +20,6 @@
 
 
 <p class="mt-2">
-  <%= link "Login", to: Routes.user_session_path(@conn, :new), class: "hover:text-blue-500" %> |
+  <%= link "Log in", to: Routes.user_session_path(@conn, :new), class: "hover:text-blue-500" %> |
   <%= link "Forgot your password?", to: Routes.user_reset_password_path(@conn, :new), class: "hover:text-blue-500" %>
 </p>

@@ -1,8 +1,8 @@
 <%= if @current_user do %>
   <span class="block px-3 py-2 rounded-md text-base font-light text-gray-400"><%= @current_user.email %></span>
   <%= link "Settings", to: Routes.user_settings_path(@conn, :edit), class: "mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700" %>
-  <%= link "Logout", to: Routes.user_session_path(@conn, :delete), method: :delete, class: "mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700" %>
+  <%= link "Log out", to: Routes.user_session_path(@conn, :delete), method: :delete, class: "mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700" %>
 
 <% else %>
-  <%= link "Login", to: Routes.user_session_path(@conn, :new), class: "mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700" %>
+  <%= link "Log in", to: Routes.user_session_path(@conn, :new), class: "mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700" %>
 <% end %>

@@ -7,22 +7,22 @@ defmodule BlanksWeb.UserSessionControllerTest do
     %{user: user_fixture()}
   end
 
-  describe "GET /users/login" do
-    test "renders login page", %{conn: conn} do
+  describe "GET /users/log_in" do
+    test "renders log in page", %{conn: conn} do
       conn = get(conn, Routes.user_session_path(conn, :new))
       response = html_response(conn, 200)
-      assert response =~ "<h1>Login</h1>"
-      assert response =~ "Login</a>"
+      assert response =~ "User log in</h1>"
+      assert response =~ "Log in</a>"
       assert response =~ "Register</a>"
     end
 
     test "redirects if already logged in", %{conn: conn, user: user} do
-      conn = conn |> login_user(user) |> get(Routes.user_session_path(conn, :new))
+      conn = conn |> log_in_user(user) |> get(Routes.user_session_path(conn, :new))
       assert redirected_to(conn) == "/"
     end
   end
 
-  describe "POST /users/login" do
+  describe "POST /users/log_in" do
     test "logs the user in", %{conn: conn, user: user} do
       conn =
         post(conn, Routes.user_session_path(conn, :create), %{
@@ -37,7 +37,7 @@ defmodule BlanksWeb.UserSessionControllerTest do
       response = html_response(conn, 200)
       assert response =~ user.email
       assert response =~ "Settings</a>"
-      assert response =~ "Logout</a>"
+      assert response =~ "Log out</a>"
     end
 
     test "logs the user in with remember me", %{conn: conn, user: user} do
@@ -61,14 +61,14 @@ defmodule BlanksWeb.UserSessionControllerTest do
         })
 
       response = html_response(conn, 200)
-      assert response =~ "<h1>Login</h1>"
+      assert response =~ "User log in</h1>"
       assert response =~ "Invalid e-mail or password"
     end
   end
 
-  describe "DELETE /users/logout" do
+  describe "DELETE /users/log_out" do
     test "logs the user out", %{conn: conn, user: user} do
-      conn = conn |> login_user(user) |> delete(Routes.user_session_path(conn, :delete))
+      conn = conn |> log_in_user(user) |> delete(Routes.user_session_path(conn, :delete))
       assert redirected_to(conn) == "/"
       refute get_session(conn, :user_token)
       assert get_flash(conn, :info) =~ "Logged out successfully"

@@ -8,7 +8,7 @@
   <% end %>
 
   <%= label f, :email, class: "block py-2" %>
-  <%= text_input f, :email, required: true,  class: "form-input w-full lg:w-1/2 my-1" %>
+  <%= email_input f, :email, required: true,  class: "form-input w-full lg:w-1/2 my-1" %>
   <div class="block mt-4"><%= error_tag f, :email %></div>
 
   <%= label f, :current_password, for: "current_password_for_email", class: "block py-2" %>

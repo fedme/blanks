@@ -57,7 +57,7 @@ defmodule BlanksWeb.UserSettingsController do
         conn
         |> put_flash(:info, "Password updated successfully.")
         |> put_session(:user_return_to, Routes.user_settings_path(conn, :edit))
-        |> UserAuth.login_user(user)
+        |> UserAuth.log_in_user(user)
 
       {:error, changeset} ->
         render(conn, "edit.html", password_changeset: changeset, page_title: @page_title)
