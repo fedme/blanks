@@ -1,12 +1,17 @@
 defmodule BlanksWeb.ClozeTestLive.Index do
   use BlanksWeb, :live_view
 
+  alias Blanks.Accounts
   alias Blanks.ClozeTests
   alias Blanks.ClozeTests.ClozeTest
 
   @impl true
-  def mount(_params, _session, socket) do
-    {:ok, assign(socket, :cloze_tests, list_cloze_tests())}
+  def mount(_params, session, socket) do
+    current_user = Accounts.get_user_by_session_token(session["user_token"])
+    socket = socket
+    |> assign(:user_id, current_user.id)
+    |> assign(:cloze_tests, list_cloze_tests(current_user.id))
+    {:ok, socket}
   end
 
   @impl true
@@ -33,14 +38,14 @@ defmodule BlanksWeb.ClozeTestLive.Index do
   end
 
   @impl true
-  def handle_event("delete", %{"id" => id}, socket) do
+  def handle_event("delete", %{"id" => id, "user_id" => user_id}, socket) do
     cloze_test = ClozeTests.get_cloze_test!(id)
     {:ok, _} = ClozeTests.delete_cloze_test(cloze_test)
 
-    {:noreply, assign(socket, :cloze_tests, list_cloze_tests())}
+    {:noreply, assign(socket, :cloze_tests, list_cloze_tests(user_id))}
   end
 
-  defp list_cloze_tests do
-    ClozeTests.list_cloze_tests()
+  defp list_cloze_tests(user_id) do
+    ClozeTests.list_user_cloze_tests(user_id)
   end
 end

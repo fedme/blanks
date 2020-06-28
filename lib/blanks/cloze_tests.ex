@@ -22,6 +22,14 @@ defmodule Blanks.ClozeTests do
   end
 
   @doc """
+  Returns the list of cloze_tests owned by the user.
+  """
+  def list_user_cloze_tests(user_id) do
+    q = from t in ClozeTest, where: t.user_id == ^user_id
+    Repo.all(q)
+  end
+
+  @doc """
   Gets a single cloze_test.
 
   Raises `Ecto.NoResultsError` if the Cloze test does not exist.

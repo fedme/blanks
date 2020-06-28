@@ -7,10 +7,11 @@ defmodule BlanksWeb.ClozeTestLive.FormComponent do
   def update(%{cloze_test: cloze_test} = assigns, socket) do
     changeset = ClozeTests.change_cloze_test(cloze_test)
 
-    {:ok,
-     socket
-     |> assign(assigns)
-     |> assign(:changeset, changeset)}
+    socket = socket
+    |> assign(assigns)
+    |> assign(:changeset, changeset)
+
+    {:ok, socket}
   end
 
   @impl true

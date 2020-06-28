@@ -1,35 +1,33 @@
 <%= if @live_action in [:new, :edit] do %>
   <%= live_modal @socket, BlanksWeb.ClozeTestLive.FormComponent,
     id: @cloze_test.id || :new,
+    user_id: @user_id,
     title: @page_title,
     action: @live_action,
     cloze_test: @cloze_test,
     return_to: Routes.cloze_test_index_path(@socket, :index) %>
 <% end %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Content</th>
+<div class="max-w-3xl">
 
-      <th></th>
-    </tr>
-  </thead>
-  <tbody id="cloze_tests">
-    <%= for cloze_test <- @cloze_tests do %>
-      <tr id="cloze_test-<%= cloze_test.id %>">
-        <td><%= cloze_test.name %></td>
-        <td><%= cloze_test.content %></td>
+  <p class="mb-8">Here is the list of the cloze tests you have created.</p>
 
-        <td>
-          <span><%= live_redirect "Show", to: Routes.cloze_test_show_path(@socket, :show, cloze_test) %></span>
-          <span><%= live_patch "Edit", to: Routes.cloze_test_index_path(@socket, :edit, cloze_test) %></span>
-          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: cloze_test.id, data: [confirm: "Are you sure?"] %></span>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+  <%= for cloze_test <- @cloze_tests do %>
+    <div id="cloze_test-<%= cloze_test.id %>" class="bg-gray-200 rounded p-4 mb-4">
+      <h2 class="text-xl font-medium pb-2"><%= cloze_test.name %></h2>
+      <p><%= cloze_test.content %></p>
 
-<span><%= live_patch "New Cloze test", to: Routes.cloze_test_index_path(@socket, :new) %></span>
+
+        <span><%= live_redirect "Show", to: Routes.cloze_test_show_path(@socket, :show, cloze_test) %></span>
+        <span><%= live_patch "Edit", to: Routes.cloze_test_index_path(@socket, :edit, cloze_test) %></span>
+        <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: cloze_test.id, data: [confirm: "Are you sure?"] %></span>
+
+    </div>
+  <% end %>
+
+</div>
+
+
+<nav>
+  <%= live_patch "New Cloze test", to: Routes.cloze_test_index_path(@socket, :new) %>
+</nav>
