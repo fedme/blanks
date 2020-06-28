@@ -1,7 +1,12 @@
 <section class="phx-hero">
-  <h1><%= gettext "Welcome to %{name}!", name: "the Blanks homepage" %></h1>
 
-  <form phx-change="suggest" phx-submit="search" class="mt-16">
+  <h1 class="font-semibold text-4xl mb-4"><%= gettext "Welcome to %{name}", name: "Blanks!" %></h1>
+
+  <p>
+    Click on the "Cloze tests" menu item to create your first cloze test!
+  </p>
+
+  <form phx-change="suggest" phx-submit="search" class="mt-16 hidden">
     <input type="text" name="q" value="<%= @query %>" placeholder="[debug] Live search" list="results" autocomplete="off"/>
     <datalist id="results">
       <%= for {app, _vsn} <- @results do %>

@@ -21,6 +21,10 @@ defmodule BlanksWeb.Router do
     pipe_through :browser
 
     live "/", PageLive, :index
+  end
+
+  scope "/", BlanksWeb do
+    pipe_through [:browser, :require_authenticated_user]
 
     live "/cloze_tests", ClozeTestLive.Index, :index
     live "/cloze_tests/new", ClozeTestLive.Index, :new
