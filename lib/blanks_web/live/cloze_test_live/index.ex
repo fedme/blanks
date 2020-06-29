@@ -33,7 +33,7 @@ defmodule BlanksWeb.ClozeTestLive.Index do
 
   defp apply_action(socket, :index, _params) do
     socket
-    |> assign(:page_title, "Cloze tests")
+    |> assign(:page_title, "Your cloze tests")
     |> assign(:cloze_test, nil)
   end
 

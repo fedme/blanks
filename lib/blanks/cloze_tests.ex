@@ -9,23 +9,10 @@ defmodule Blanks.ClozeTests do
   alias Blanks.ClozeTests.ClozeTest
 
   @doc """
-  Returns the list of cloze_tests.
-
-  ## Examples
-
-      iex> list_cloze_tests()
-      [%ClozeTest{}, ...]
-
-  """
-  def list_cloze_tests do
-    Repo.all(ClozeTest)
-  end
-
-  @doc """
   Returns the list of cloze_tests owned by the user.
   """
   def list_user_cloze_tests(user_id) do
-    q = from t in ClozeTest, where: t.user_id == ^user_id
+    q = from t in ClozeTest, where: t.user_id == ^user_id, order_by: t.inserted_at
     Repo.all(q)
   end
 

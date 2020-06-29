@@ -25,6 +25,7 @@ defmodule BlanksWeb.ClozeTestLive.FormComponent do
   end
 
   def handle_event("save", %{"cloze_test" => cloze_test_params}, socket) do
+    cloze_test_params = Map.put(cloze_test_params, "user_id", socket.assigns.user_id)
     save_cloze_test(socket, socket.assigns.action, cloze_test_params)
   end
 
