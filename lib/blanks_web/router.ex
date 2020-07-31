@@ -27,11 +27,8 @@ defmodule BlanksWeb.Router do
     pipe_through [:browser, :require_authenticated_user]
 
     live "/cloze_tests", ClozeTestLive.Index, :index
-    live "/cloze_tests/new", ClozeTestLive.Index, :new
-    live "/cloze_tests/:id/edit", ClozeTestLive.Index, :edit
-
-    live "/cloze_tests/:id", ClozeTestLive.Show, :show
-    live "/cloze_tests/:id/show/edit", ClozeTestLive.Show, :edit
+    live "/cloze_tests/new", ClozeTestLive.Edit, :new
+    live "/cloze_tests/:id/edit", ClozeTestLive.Edit, :edit
   end
 
   # Other scopes may use custom stacks.

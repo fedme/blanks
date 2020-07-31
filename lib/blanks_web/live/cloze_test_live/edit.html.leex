@@ -1,0 +1,42 @@
+<div class="flex">
+
+  <div class="sm:w-full w-1/2 p-4 md:pl-0">
+    <%= f = form_for @changeset, "#",
+              phx_submit: "save",
+              phx_change: "change" %>
+
+      <div class="field">
+        <%= text_input f, :name,
+                        placeholder: "Name",
+                        autocomplete: "off",
+                        phx_debounce: "2000",
+                        class: "form-input" %>
+        <%= error_tag f, :name %>
+      </div>
+
+      <div class="field">
+        <%= textarea f, :content,
+                            placeholder: "Content",
+                            autocomplete: "off",
+                            phx_debounce: "500",
+                            class: "form-input w-full" %>
+        <%= error_tag f, :phone %>
+      </div>
+
+      <%= submit "Save", phx_disable_with: "Saving...", class: "mb-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+    </form>
+  </div>
+
+  <div class="sm:w-full w-1/2 p-4">
+    <div class="w-full">
+      <%= @changeset.changes.content %>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+<span><%= live_redirect "Back", to: Routes.cloze_test_index_path(@socket, :index) %></span>
