@@ -1,6 +1,6 @@
 <div class="flex w-full">
 
-  <div class="sm:w-full w-1/2 p-4 md:pl-0 pt-0">
+  <div class="cloze-editor sm:w-full w-1/2 p-4 md:pl-0 pt-0">
     <%= f = form_for @changeset, "#",
               phx_submit: "save",
               phx_change: "change" %>
@@ -27,16 +27,16 @@
     </form>
   </div>
 
-  <div class="sm:w-full w-1/2 p-4 pt-0">
+  <div class="cloze-preview sm:w-full w-1/2 p-4 pt-0">
     <div class="w-full">
-      <%= raw(@preview_html) %>
+      <%= _f = form_for :aaa, "#",
+                phx_submit: "preview_submit",
+                phx_change: "preview_change" %>
+        <%= raw(@preview_html) %>
+      </form>
     </div>
   </div>
 
 </div>
-
-
-
-
 
 <span><%= live_redirect "Back", to: Routes.cloze_test_index_path(@socket, :index) %></span>

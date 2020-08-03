@@ -34,11 +34,22 @@ defmodule Blanks.Markdown.Transform do
   defp _to_html({:comment, _, content, _}, _options, _level, _verbatim) do
     "<!--#{content |> Enum.intersperse("\n")}-->\n"
   end
-  defp _to_html({"a", atts, children, _}, _options, _level, _verbatim) do
-    atts = atts |> Enum.into(%{})
+
+  defp _to_html({"a", atts, children, _}, %{is_cloze_test: true, is_preview: is_preview}, _level, _verbatim) do
     IO.inspect(atts)
-    ["<input type=\"text\" name=\"#{Map.get(atts, "href", "")}\"  value=\"#{Enum.at(children, 0, "")}\" class=\"bg-gray-200 w-20 px-1 mr-1\" />"]
+    atts = atts |> Enum.into(%{})
+    attributes = [
+      {"type", "text"},
+      {"name", Map.get(atts, "href", "")},
+      {"value", Enum.at(children, 0, "")},
+      {"autocomplete", "off"},
+      {"disabled", to_string(is_preview)},
+      {"phx-debounce", "500"},
+      {"class", "bg-gray-200 w-20 px-1 mr-1"}
+    ]
+    open_tag("input", attributes)
   end
+
   defp _to_html({tag, atts, children, _}, options, level, verbatim) when tag in @compact_tags do
     [open_tag(tag, atts),
        children

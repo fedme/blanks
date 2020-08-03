@@ -8,38 +8,42 @@
 
 @import "../node_modules/nprogress/nprogress.css";
 
-form {
-  @apply w-full py-2 mb-8 flex flex-col items-baseline justify-around;
+.cloze-editor {
 
-  .field {
-    @apply flex-1 mb-2 w-full;
+  form {
+    @apply w-full py-2 mb-8 flex flex-col items-baseline justify-around;
+
+    .field {
+      @apply flex-1 mb-2 w-full;
+    }
+
+    input[type="text"],
+    input[type="tel"] {
+      @apply w-full appearance-none px-3 py-2 border border-cool-gray-400 rounded-md transition duration-150 ease-in-out text-base leading-5 text-xl;
+    }
+
+    input[type="text"]:focus,
+    input[type="tel"]:focus {
+      @apply outline-none border-indigo-300 shadow-outline-indigo;
+    }
+
+    button {
+      @apply py-2 px-4 border border-transparent font-medium rounded-md text-white bg-green-500 transition duration-150 ease-in-out outline-none flex-initial text-lg;
+    }
+
+    button:hover {
+      @apply bg-green-700
+    }
+
+    button:focus {
+      @apply outline-none border-green-700 shadow-outline-green;
+    }
+
+    .invalid-feedback {
+      @apply m-0 mt-2 text-sm text-red-600;
+    }
   }
 
-  input[type="text"],
-  input[type="tel"] {
-    @apply w-full appearance-none px-3 py-2 border border-cool-gray-400 rounded-md transition duration-150 ease-in-out text-base leading-5 text-xl;
-  }
-
-  input[type="text"]:focus,
-  input[type="tel"]:focus {
-    @apply outline-none border-indigo-300 shadow-outline-indigo;
-  }
-
-  button {
-    @apply py-2 px-4 border border-transparent font-medium rounded-md text-white bg-green-500 transition duration-150 ease-in-out outline-none flex-initial text-lg;
-  }
-
-  button:hover {
-    @apply bg-green-700
-  }
-
-  button:focus {
-    @apply outline-none border-green-700 shadow-outline-green;
-  }
-
-  .invalid-feedback {
-    @apply m-0 mt-2 text-sm text-red-600;
-  }
 }
 
 /* LiveView specific classes for your customizations */

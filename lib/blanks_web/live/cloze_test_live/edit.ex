@@ -34,25 +34,25 @@ defmodule BlanksWeb.ClozeTestLive.Edit do
   def handle_event("change", %{"cloze_test" => params}, socket) do
     # params = Map.update(params, "content", "", &(HtmlSanitizeEx.strip_tags(&1)))
 
-    {:ok, ast, []} = Map.get(params, "content", "") |> EarmarkParser.as_ast()
+    {:ok, ast, []} = Map.get(params, "content", "") |> EarmarkParser.as_ast() # TODO: handle errors
 
-    IO.inspect(ast)
-
-    preview_html = Blanks.Markdown.Transform.transform(ast)
-
-    IO.inspect(preview_html)
+    preview_html = Blanks.Markdown.Transform.transform(ast, is_cloze_test: true, is_preview: true)
 
     changeset =
       %ClozeTest{}
       |> ClozeTests.change_cloze_test(params)
       |> Map.put(:action, :insert)
 
-    socket =
-      assign(socket,
+    socket = socket |> assign(
         changeset: changeset,
         preview_html: preview_html
-      )
+    )
 
+    {:noreply, socket}
+  end
+
+  def handle_event("preview_change", values, socket) do
+    IO.inspect(values)
     {:noreply, socket}
   end
 
