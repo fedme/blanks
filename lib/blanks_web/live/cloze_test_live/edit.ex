@@ -22,6 +22,7 @@ defmodule BlanksWeb.ClozeTestLive.Edit do
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
+     |> assign(:cloze_test_id, id)
      |> assign(:changeset, ClozeTests.change_cloze_test(cloze_test, %{}))
      |> assign(:preview_html, preview_html)}
   end
@@ -34,6 +35,7 @@ defmodule BlanksWeb.ClozeTestLive.Edit do
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
+     |> assign(:cloze_test_id, :noid)
      |> assign(:changeset, ClozeTests.change_cloze_test(%ClozeTest{}, initial_values))
      |> assign(:preview_html, preview_html)}
   end
@@ -56,8 +58,7 @@ defmodule BlanksWeb.ClozeTestLive.Edit do
   def handle_event("editor-submit", %{"cloze_test" => params}, socket) do
     IO.puts("editor-submit")
     params = params |> Map.put("user_id", socket.assigns.user_id)
-    IO.inspect(params)
-    case ClozeTests.create_cloze_test(params) do
+    case save_cloze_test(socket.assigns.cloze_test_id, params) do
       {:ok, _cloze_test} ->
         # TODO: update list of tests
         IO.puts("saved ok")
@@ -83,5 +84,14 @@ defmodule BlanksWeb.ClozeTestLive.Edit do
   defp markdown_to_html(content) do
     {:ok, ast, []} = EarmarkParser.as_ast(content) # TODO: handle errors
     Blanks.Markdown.Transform.transform(ast, is_cloze_test: true, is_preview: true)
+  end
+
+  defp save_cloze_test(:noid, params) do
+    ClozeTests.create_cloze_test(params)
+  end
+
+  defp save_cloze_test(cloze_test_id, params) do
+    cloze_test = ClozeTests.get_cloze_test!(cloze_test_id)
+    ClozeTests.update_cloze_test(cloze_test, params)
   end
 end
