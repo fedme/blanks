@@ -48,7 +48,9 @@ defmodule Blanks.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:phx_gen_auth, "~> 0.4.0", only: [:dev], runtime: false}
+      {:phx_gen_auth, "~> 0.4.0", only: [:dev], runtime: false},
+      {:html_sanitize_ex, "~> 1.4.1"},
+      {:earmark, "~> 1.4.10" }
     ]
   end
 

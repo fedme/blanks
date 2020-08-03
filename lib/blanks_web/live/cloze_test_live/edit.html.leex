@@ -1,6 +1,6 @@
-<div class="flex">
+<div class="flex w-full">
 
-  <div class="sm:w-full w-1/2 p-4 md:pl-0">
+  <div class="sm:w-full w-1/2 p-4 md:pl-0 pt-0">
     <%= f = form_for @changeset, "#",
               phx_submit: "save",
               phx_change: "change" %>
@@ -27,9 +27,9 @@
     </form>
   </div>
 
-  <div class="sm:w-full w-1/2 p-4">
+  <div class="sm:w-full w-1/2 p-4 pt-0">
     <div class="w-full">
-      <%= @changeset.changes.content %>
+      <%= raw(@preview_html) %>
     </div>
   </div>
 
