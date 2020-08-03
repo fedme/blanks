@@ -36,16 +36,14 @@ defmodule Blanks.Markdown.Transform do
   end
 
   defp _to_html({"a", atts, children, _}, %{is_cloze_test: true, is_preview: is_preview}, _level, _verbatim) do
-    IO.inspect(atts)
-    atts = atts |> Enum.into(%{})
     attributes = [
       {"type", "text"},
-      {"name", Map.get(atts, "href", "")},
-      {"value", Enum.at(children, 0, "")},
+      {"name", atts |> Enum.into(%{}) |> Map.get("href", "")},
+      {"value", children |> Enum.at(0, "")},
       {"autocomplete", "off"},
-      {"disabled", to_string(is_preview)},
+      {"disabled", is_preview |> to_string()},
       {"phx-debounce", "500"},
-      {"class", "bg-gray-200 w-20 px-1 mr-1"}
+      {"class", "bg-gray-200 #{if is_preview, do: "text-gray-400", else: "text-gray-900"} w-20 px-1 mr-1"}
     ]
     open_tag("input", attributes)
   end

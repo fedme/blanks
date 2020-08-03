@@ -45,6 +45,7 @@ defmodule Blanks.ClozeTests do
 
   """
   def create_cloze_test(attrs \\ %{}) do
+    IO.puts("create_cloze_test")
     %ClozeTest{}
     |> ClozeTest.changeset(attrs)
     |> Repo.insert()

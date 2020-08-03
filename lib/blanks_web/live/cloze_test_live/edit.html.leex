@@ -2,8 +2,8 @@
 
   <div class="cloze-editor sm:w-full w-1/2 p-4 md:pl-0 pt-0">
     <%= f = form_for @changeset, "#",
-              phx_submit: "save",
-              phx_change: "change" %>
+              phx_submit: "editor-submit",
+              phx_change: "editor-change" %>
 
       <div class="field">
         <%= text_input f, :name,
@@ -30,8 +30,8 @@
   <div class="cloze-preview sm:w-full w-1/2 p-4 pt-0">
     <div class="w-full">
       <%= _f = form_for :aaa, "#",
-                phx_submit: "preview_submit",
-                phx_change: "preview_change" %>
+                phx_submit: "preview-submit",
+                phx_change: "preview-change" %>
         <%= raw(@preview_html) %>
       </form>
     </div>
