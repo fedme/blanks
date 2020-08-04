@@ -45,7 +45,7 @@ defmodule Blanks.Markdown.Transform do
       {"class", "bg-gray-200 #{if is_preview, do: "text-gray-400", else: "text-gray-900"} w-20 px-1 mr-1"}
     ]
 
-    attributes = if is_preview, do: Map.put(attributes, "disabled", "true"), else: attributes
+    attributes = if is_preview, do: [{"disabled", "true"} | attributes], else: attributes
 
     open_tag("input", attributes)
   end
