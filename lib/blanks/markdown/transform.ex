@@ -41,10 +41,12 @@ defmodule Blanks.Markdown.Transform do
       {"name", atts |> Enum.into(%{}) |> Map.get("href", "")},
       {"value", children |> Enum.at(0, "")},
       {"autocomplete", "off"},
-      {"disabled", is_preview |> to_string()},
       {"phx-debounce", "500"},
       {"class", "bg-gray-200 #{if is_preview, do: "text-gray-400", else: "text-gray-900"} w-20 px-1 mr-1"}
     ]
+
+    attributes = if is_preview, do: Map.put(attributes, "disabled", "true"), else: attributes
+
     open_tag("input", attributes)
   end
 

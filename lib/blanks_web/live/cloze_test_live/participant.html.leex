@@ -1,0 +1,22 @@
+<header class="bg-white shadow">
+  <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+    <h1 class="text-3xl font-bold leading-tight text-gray-900">Participant view</h1>
+  </div>
+</header>
+
+<div class="max-w-7xl mx-auto pt-4 sm:px-6 lg:px-8">
+  <div class="pt-2">
+    <div class="md:flex w-full">
+      <div class="cloze-preview w-full p-2 md:p-4 pt-1">
+        <article class="w-full prose">
+          <%= _f = form_for :aaa, "#",
+                    phx_submit: "preview-submit",
+                    phx_change: "preview-change" %>
+            <%= raw(@preview_html) %>
+          </form>
+        </article>
+      </div>
+    </div>
+
+  </div>
+</div>
