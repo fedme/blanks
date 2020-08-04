@@ -16,14 +16,15 @@ defmodule BlanksWeb.ClozeTestLive.Edit do
   end
 
   @impl true
-  def handle_params(%{"id" => id}, _, socket) do
-    cloze_test = ClozeTests.get_cloze_test!(id)
+  def handle_params(%{"id" => cloze_test_id}, _, socket) do
+    cloze_test = ClozeTests.get_user_cloze_test(socket.assigns.user_id, cloze_test_id)
+    # TODO: handle cloze test null
     preview_html = cloze_test.content |> markdown_to_html()
 
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:cloze_test_id, id)
+     |> assign(:cloze_test_id, cloze_test_id)
      |> assign(:changeset, ClozeTests.change_cloze_test(cloze_test, %{}))
      |> assign(:preview_html, preview_html)}
   end
