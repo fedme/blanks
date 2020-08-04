@@ -19,8 +19,8 @@
                             placeholder: "Content",
                             autocomplete: "off",
                             phx_debounce: "500",
-                            class: "form-input w-full" %>
-        <%= error_tag f, :phone %>
+                            class: "w-full resize-y border rounded focus:outline-none focus:shadow-outline" %>
+        <%= error_tag f, :content %>
       </div>
 
       <%= submit "Save", phx_disable_with: "Saving...", class: "mb-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>

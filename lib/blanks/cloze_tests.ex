@@ -16,6 +16,14 @@ defmodule Blanks.ClozeTests do
     Repo.all(q)
   end
 
+    @doc """
+  Returns the list of cloze_tests owned by the user.
+  """
+  def get_user_cloze_test(user_id, cloze_test_id) do
+    q = from t in ClozeTest, where: t.user_id == ^user_id and t.id == ^cloze_test_id
+    Repo.one(q)
+  end
+
   @doc """
   Gets a single cloze_test.
 
