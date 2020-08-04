@@ -4,10 +4,10 @@
   </div>
 </header>
 
-<div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-  <div class="px-4 py-2 sm:px-0">
-    <div class="flex w-full">
-      <div class="cloze-editor sm:w-full w-1/2 p-4 md:pl-0 pt-0">
+<div class="max-w-7xl mx-auto pt-4 sm:px-6 lg:px-8">
+  <div class="pt-2">
+    <div class="md:flex w-full">
+      <div class="cloze-editor w-full md:w-1/2 p-2 md:p-4 md:pl-0 pt-0">
         <%= f = form_for @changeset, "#",
                   phx_submit: "editor-submit",
                   phx_change: "editor-change" %>
@@ -31,11 +31,14 @@
             <%= error_tag f, :content %>
           </div>
 
-          <%= submit "Save", phx_disable_with: "Saving...", class: "mb-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+          <div class="flex items-center mb-2">
+            <%= submit "Save", phx_disable_with: "Saving...", class: "block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+            <div class="ml-4 hover:text-blue-800"><%= live_redirect "Back", to: Routes.cloze_test_index_path(@socket, :index) %></div>
+          </div>
         </form>
       </div>
 
-      <div class="cloze-preview sm:w-full w-1/2 p-4 pt-0">
+      <div class="cloze-preview w-full md:w-1/2 p-2 md:p-4 pt-1">
         <article class="w-full prose">
           <%= _f = form_for :aaa, "#",
                     phx_submit: "preview-submit",
@@ -44,9 +47,7 @@
           </form>
         </article>
       </div>
-
     </div>
-    <span><%= live_redirect "Back", to: Routes.cloze_test_index_path(@socket, :index) %></span>
 
   </div>
 </div>

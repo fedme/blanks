@@ -11,7 +11,7 @@
 .cloze-editor {
 
   form {
-    @apply w-full py-2 mb-8 flex flex-col items-baseline justify-around;
+    @apply w-full flex flex-col items-baseline justify-around;
 
     .field {
       @apply flex-1 mb-2 w-full;
