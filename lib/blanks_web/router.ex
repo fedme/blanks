@@ -20,7 +20,7 @@ defmodule BlanksWeb.Router do
   scope "/", BlanksWeb do
     pipe_through :browser
 
-    live "/", PageLive, :index
+    get "/", HomePageController, :index
   end
 
   scope "/", BlanksWeb do

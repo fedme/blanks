@@ -3,7 +3,7 @@
     <div class="flex items-center justify-between h-16">
       <div class="flex items-center">
         <div class="flex-shrink-0 text-white font-extrabold text-xl">
-          <%= link "Blanks", to: Routes.page_path(@conn, :index) %>
+          <%= link "Blanks", to: Routes.home_page_path(@conn, :index) %>
         </div>
         <div class="hidden md:block">
           <div class="ml-10 flex items-baseline">
@@ -40,7 +40,6 @@
               </button>
             </div>
 
-
             <!--
                   Profile dropdown panel, show/hide based on dropdown state.
 
@@ -67,14 +66,11 @@
         </div>
       </div>
       <div class="-mr-2 flex md:hidden">
-        <!-- Mobile menu button -->
         <button @click="mobileMenuOpen = !mobileMenuOpen"
           class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 focus:text-white">
-          <!-- Menu open: "hidden", Menu closed: "block" -->
           <svg x-show="mobileMenuOpen == false" class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
           </svg>
-          <!-- Menu open: "block", Menu closed: "hidden" -->
           <svg x-show="mobileMenuOpen" class="h-6 w-6" stroke="currentColor" fill="none"
             viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -84,27 +80,14 @@
     </div>
   </div>
 
-  <!--
-      Mobile menu, toggle classes based on menu state.
-
-      Open: "block", closed: "hidden"
-    -->
+  <!-- Mobile menu -->
   <div class="md:hidden" x-show="mobileMenuOpen">
     <div class="px-2 pt-2 pb-3 sm:px-3">
-      <a href="#"
-        class="block px-3 py-2 rounded-md text-base font-medium text-white bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700">
-        Dashboard
-      </a>
-      <a href="#"
-        class="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700">
-        Cloze Tests
-      </a>
+      <%= link "Cloze tests", to: Routes.cloze_test_index_path(@conn, :index), class: "mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700" %>
     </div>
     <div class="pt-4 pb-3 border-t border-gray-700">
       <div class="mt-3 px-2">
-
         <%= render "_user_menu_mobile.html", assigns %>
-
       </div>
     </div>
   </div>

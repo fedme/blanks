@@ -9,6 +9,7 @@ defmodule BlanksWeb.ClozeTestLive.Edit do
   def mount(_params, session, socket) do
     current_user = Accounts.get_user_by_session_token(session["user_token"])
     socket = socket
+    |> assign(:page_title, page_title(socket.assigns.live_action))
     |> assign(:user_id, current_user.id)
     |> assign(:preview_html, "")
     {:ok, socket}
@@ -78,8 +79,8 @@ defmodule BlanksWeb.ClozeTestLive.Edit do
     {:noreply, socket}
   end
 
-  defp page_title(:new), do: "New Cloze test"
-  defp page_title(:edit), do: "Edit Cloze test"
+  defp page_title(:new), do: "New cloze test"
+  defp page_title(:edit), do: "Edit cloze test"
 
   defp markdown_to_html(content) do
     {:ok, ast, []} = EarmarkParser.as_ast(content) # TODO: handle errors
