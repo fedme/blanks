@@ -16,10 +16,11 @@
 
       <div class="field">
         <%= textarea f, :content,
-                            placeholder: "Content",
-                            autocomplete: "off",
-                            phx_debounce: "500",
-                            class: "w-full resize-y border rounded focus:outline-none focus:shadow-outline" %>
+                        rows: 12,
+                        placeholder: "Content",
+                        autocomplete: "off",
+                        phx_debounce: "500",
+                        class: "w-full resize-y border rounded focus:outline-none focus:shadow-outline px-2 py-1" %>
         <%= error_tag f, :content %>
       </div>
 
