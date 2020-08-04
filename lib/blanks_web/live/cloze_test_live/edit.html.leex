@@ -36,13 +36,13 @@
       </div>
 
       <div class="cloze-preview sm:w-full w-1/2 p-4 pt-0">
-        <div class="w-full">
+        <article class="w-full prose">
           <%= _f = form_for :aaa, "#",
                     phx_submit: "preview-submit",
                     phx_change: "preview-change" %>
             <%= raw(@preview_html) %>
           </form>
-        </div>
+        </article>
       </div>
 
     </div>
