@@ -23,14 +23,14 @@ defmodule BlanksWeb.Router do
     get "/", HomePageController, :index
   end
 
-  scope "experimenter", BlanksWeb do
+  scope "/experimenter", BlanksWeb do
     pipe_through [:browser, :require_authenticated_user]
     live "/cloze_tests", ClozeTestLive.Index, :index
     live "/cloze_tests/new", ClozeTestLive.Edit, :new
     live "/cloze_tests/:id/edit", ClozeTestLive.Edit, :edit
   end
 
-  scope "participant", BlanksWeb do
+  scope "/participant", BlanksWeb do
     pipe_through [:browser]
     live "/cloze_tests/:id/", ClozeTestLive.Participant, :edit # TODO: use a random shortcode instead of ID for security
   end

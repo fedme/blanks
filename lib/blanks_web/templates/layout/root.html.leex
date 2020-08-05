@@ -12,7 +12,9 @@
   </head>
   <body>
     <div>
-      <%= render "_site_header.html", assigns %>
+      <%= if not Map.get(assigns, :hide_header, false) do %>
+        <%=  render "_site_header.html", assigns %>
+      <% end %>
       <%= @inner_content %>
     </div>
   </body>

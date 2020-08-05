@@ -31,7 +31,7 @@ defmodule BlanksWeb.ClozeTestLive.Edit do
 
   @impl true
   def handle_params(_, _, socket) do
-    initial_values = %{name: "New Test", content: "The [food](1) is [great](2) *here*.", user_id: socket.assigns.user_id}
+    initial_values = %{name: "New Test", content: "# This is a title\nThe [food](1) is [great](2) *here*.", user_id: socket.assigns.user_id}
     preview_html = initial_values.content |> markdown_to_html()
 
     {:noreply,
@@ -58,17 +58,13 @@ defmodule BlanksWeb.ClozeTestLive.Edit do
   end
 
   def handle_event("editor-submit", %{"cloze_test" => params}, socket) do
-    IO.puts("editor-submit")
     params = params |> Map.put("user_id", socket.assigns.user_id)
     case save_cloze_test(socket.assigns.cloze_test_id, params) do
       {:ok, _cloze_test} ->
         # TODO: update list of tests
-        IO.puts("saved ok")
         {:noreply, socket}
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        IO.puts("saved error")
-        IO.inspect(changeset)
         socket = assign(socket, changeset: changeset)
         {:noreply, socket}
     end

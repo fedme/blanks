@@ -1,15 +1,14 @@
 defmodule BlanksWeb.ClozeTestLive.Participant do
   use BlanksWeb, :live_view
 
-  alias Blanks.Accounts
   alias Blanks.ClozeTests
-  alias Blanks.ClozeTests.ClozeTest
 
   @impl true
   def mount(_params, _session, socket) do
     socket = socket
-    |> assign(:page_title, page_title(socket.assigns.live_action))
-    |> assign(:preview_html, "")
+    |> assign(:page_title, "Cloze test")
+    |> assign(:hide_header, true)
+    |> assign(:cloze_test_html, "")
     {:ok, socket}
   end
 
@@ -17,23 +16,19 @@ defmodule BlanksWeb.ClozeTestLive.Participant do
   def handle_params(%{"id" => cloze_test_id}, _, socket) do
     cloze_test = ClozeTests.get_cloze_test!(cloze_test_id)
     # TODO: handle cloze test null
-    preview_html = cloze_test.content |> markdown_to_html()
+    cloze_test_html = cloze_test.content |> markdown_to_html()
 
     {:noreply,
      socket
-     |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:cloze_test_id, cloze_test_id)
-     |> assign(:preview_html, preview_html)}
+     |> assign(:cloze_test, cloze_test)
+     |> assign(:cloze_test_html, cloze_test_html)}
   end
 
   @impl true
-  def handle_event("preview-change", values, socket) do
+  def handle_event("form-submit", values, socket) do
     IO.inspect(values)
     {:noreply, socket}
   end
-
-  defp page_title(:new), do: "New cloze test"
-  defp page_title(:edit), do: "Edit cloze test"
 
   defp markdown_to_html(content) do
     {:ok, ast, []} = EarmarkParser.as_ast(content) # TODO: handle errors

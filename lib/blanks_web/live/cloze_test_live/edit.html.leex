@@ -6,7 +6,10 @@
 
 <div class="max-w-7xl mx-auto pt-4 sm:px-6 lg:px-8">
   <div class="pt-2">
-    <div class="md:flex w-full">
+
+    <p class="text-gray-600">Write your text usign Markdown syntax.<br />Surround words with <i>[word](aUniqueNumber)</i> to turn them into blanks.</p>
+
+    <div class="md:flex w-full mt-4">
       <div class="cloze-editor w-full md:w-1/2 p-2 md:p-4 md:pl-0 pt-0">
         <%= f = form_for @changeset, "#",
                   phx_submit: "editor-submit",
@@ -40,11 +43,7 @@
 
       <div class="cloze-preview w-full md:w-1/2 p-2 md:p-4 pt-1">
         <article class="w-full prose">
-          <%= _f = form_for :aaa, "#",
-                    phx_submit: "preview-submit",
-                    phx_change: "preview-change" %>
-            <%= raw(@preview_html) %>
-          </form>
+          <%= raw(@preview_html) %>
         </article>
       </div>
     </div>
