@@ -37,7 +37,7 @@ defmodule BlanksWeb.ClozeTestLive.Edit do
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:cloze_test_id, :noid)
+     |> assign(:cloze_test_id, :new)
      |> assign(:changeset, ClozeTests.change_cloze_test(%ClozeTest{}, initial_values))
      |> assign(:preview_html, preview_html)}
   end
@@ -60,9 +60,9 @@ defmodule BlanksWeb.ClozeTestLive.Edit do
   def handle_event("editor-submit", %{"cloze_test" => params}, socket) do
     params = params |> Map.put("user_id", socket.assigns.user_id)
     case save_cloze_test(socket.assigns.cloze_test_id, params) do
-      {:ok, _cloze_test} ->
+      {:ok, cloze_test} ->
         # TODO: update list of tests
-        {:noreply, socket}
+        {:noreply, socket |> assign(:cloze_test_id, cloze_test.id)}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         socket = assign(socket, changeset: changeset)
@@ -84,7 +84,7 @@ defmodule BlanksWeb.ClozeTestLive.Edit do
     Blanks.Markdown.Transform.transform(ast, is_cloze_test: true, is_preview: true)
   end
 
-  defp save_cloze_test(:noid, params) do
+  defp save_cloze_test(:new, params) do
     ClozeTests.create_cloze_test(params)
   end
 

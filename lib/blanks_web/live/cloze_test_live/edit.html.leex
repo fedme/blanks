@@ -15,7 +15,7 @@
   <div class="max-w-7xl mx-auto pt-4 sm:px-6 lg:px-8">
     <div class="pt-2">
 
-      <p class="text-gray-600">Write your text usign Markdown syntax.<br />Surround words with <span class="p-1 font-mono">[word](aUniqueNumber)</span> to turn them into blanks.</p>
+      <p class="font-light text-gray-500">Write your text usign Markdown syntax.<br />Surround words with <span class="p-1 font-mono">[word](aUniqueNumber)</span> to turn them into blanks.</p>
 
       <div class="md:flex w-full mt-4">
         <div class="cloze-editor w-full md:w-1/2 p-2 md:p-4 md:pl-0 pt-0">
@@ -36,6 +36,15 @@
                               class: "w-full resize-y border rounded focus:outline-none focus:shadow-outline px-2 py-1" %>
               <%= error_tag f, :content %>
             </div>
+
+            <%= if @cloze_test_id != :new do %>
+              <div class="w-full bg-green-100 rounded p-4 text-gray-800">
+                <span class="font-semibold">Give participants the following URL:</span><br />
+                <a class="font-thin font-xs" href="<%= Routes.cloze_test_participant_url(@socket, :edit, @cloze_test_id) %>" target="_blank">
+                  <%= Routes.cloze_test_participant_url(@socket, :edit, @cloze_test_id) %>
+                </a>
+              </div>
+            <% end %>
         </div>
 
         <div class="cloze-preview w-full md:w-1/2 p-2 md:p-4 pt-1">
