@@ -6,7 +6,7 @@ defmodule Blanks.ClozeTests.ClozeTest do
     field :content, :string
     field :name, :string
     belongs_to :user, Blanks.Accounts.User
-
+    has_many :submissions, Blanks.ClozeTests.ClozeTestSubmission
     timestamps()
   end
 

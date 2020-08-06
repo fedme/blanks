@@ -7,6 +7,7 @@ defmodule Blanks.ClozeTests do
   alias Blanks.Repo
 
   alias Blanks.ClozeTests.ClozeTest
+  alias Blanks.ClozeTests.ClozeTestSubmission
 
   @doc """
   Returns the list of cloze_tests owned by the user.
@@ -53,11 +54,12 @@ defmodule Blanks.ClozeTests do
 
   """
   def create_cloze_test(attrs \\ %{}) do
-    IO.puts("create_cloze_test")
     %ClozeTest{}
     |> ClozeTest.changeset(attrs)
     |> Repo.insert()
   end
+
+
 
   @doc """
   Updates a cloze_test.
@@ -104,5 +106,22 @@ defmodule Blanks.ClozeTests do
   """
   def change_cloze_test(%ClozeTest{} = cloze_test, attrs \\ %{}) do
     ClozeTest.changeset(cloze_test, attrs)
+  end
+
+   @doc """
+  Returns an `%Ecto.Changeset{}` for tracking cloze_test_submission changes.
+  """
+  def change_cloze_test_submission(%ClozeTestSubmission{} = cloze_test_submission, attrs \\ %{}) do
+    ClozeTestSubmission.changeset(cloze_test_submission, attrs)
+  end
+
+  @doc """
+  Creates a cloze_test submission.
+  """
+  def create_cloze_test_submission(attrs \\ %{}, fillings \\ []) do
+    attrs = attrs |> Map.put(:fillings, fillings)
+    %ClozeTestSubmission{}
+    |> ClozeTestSubmission.changeset(attrs)
+    |> Repo.insert()
   end
 end

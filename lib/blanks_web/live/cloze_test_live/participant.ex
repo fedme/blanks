@@ -2,6 +2,7 @@ defmodule BlanksWeb.ClozeTestLive.Participant do
   use BlanksWeb, :live_view
 
   alias Blanks.ClozeTests
+  alias Blanks.ClozeTests.ClozeTestSubmission
 
   @impl true
   def mount(_params, _session, socket) do
@@ -21,13 +22,24 @@ defmodule BlanksWeb.ClozeTestLive.Participant do
     {:noreply,
      socket
      |> assign(:cloze_test, cloze_test)
+     |> assign(:changeset, ClozeTests.change_cloze_test_submission(%ClozeTestSubmission{}))
      |> assign(:cloze_test_html, cloze_test_html)}
   end
 
   @impl true
-  def handle_event("form-submit", values, socket) do
-    IO.inspect(values)
-    {:noreply, socket}
+  def handle_event("form-submit", fillings, socket) do
+    attrs = %{cloze_test_id: socket.assigns.cloze_test.id}
+    fillings = fillings
+      |> Map.delete("_csrf_token")
+      |> Enum.map(fn {k, v} -> %{blank_id: k, value: v} end)
+
+    case ClozeTests.create_cloze_test_submission(attrs, fillings) do
+      {:ok, _submission} ->
+        {:noreply, socket |> redirect(to: Routes.participant_path(socket, :success))}
+      {:error, %Ecto.Changeset{} = changeset} ->
+        IO.inspect(changeset)
+        {:noreply, socket |>  assign(changeset: changeset)}
+    end
   end
 
   defp markdown_to_html(content) do

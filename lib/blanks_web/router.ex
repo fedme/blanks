@@ -32,6 +32,7 @@ defmodule BlanksWeb.Router do
 
   scope "/participant", BlanksWeb do
     pipe_through [:browser]
+    get "/success", ParticipantController, :success
     live "/cloze_tests/:id/", ClozeTestLive.Participant, :edit # TODO: use a random shortcode instead of ID for security
   end
 
