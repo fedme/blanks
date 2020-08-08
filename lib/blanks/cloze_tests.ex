@@ -124,4 +124,38 @@ defmodule Blanks.ClozeTests do
     |> ClozeTestSubmission.changeset(attrs)
     |> Repo.insert()
   end
+
+  @doc """
+  Returns the list of cloze_tests submissions for a specific cloze test.
+  """
+  def list_cloze_test_submissions(cloze_test_id, preload_fillings \\ false) do
+    query = from t in ClozeTestSubmission, where: t.cloze_test_id == ^cloze_test_id, order_by: t.inserted_at
+    query_cloze_test_submissions(query, preload_fillings)
+  end
+
+  defp query_cloze_test_submissions(query, true) do
+    Repo.all(query)
+    |> Repo.preload([:fillings])
+  end
+  defp query_cloze_test_submissions(query, false) do
+    Repo.all(query)
+  end
+
+  @doc """
+  Returns all fillings from the given submissions.
+  """
+  def get_all_fillings(submissions) do
+    submissions
+      |> Enum.flat_map(fn submission -> submission.fillings end)
+      |> Enum.group_by(fn submission -> submission.blank_id end)
+      |> Enum.map(fn {blank_id, fillings} -> {blank_id, fillings_with_frequencies(fillings)} end)
+      |> Enum.into(%{})
+  end
+
+  defp fillings_with_frequencies(fillings) do
+    fillings
+      |> Enum.frequencies_by(fn filling -> filling.value end)
+      |> Enum.to_list()
+      |> Enum.sort_by(&(elem(&1, 1)), :desc)
+  end
 end

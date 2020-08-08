@@ -28,6 +28,7 @@ defmodule BlanksWeb.Router do
     live "/cloze_tests", ClozeTestLive.Index, :index
     live "/cloze_tests/new", ClozeTestLive.Edit, :new
     live "/cloze_tests/:id/edit", ClozeTestLive.Edit, :edit
+    live "/cloze_tests/:id/results", ClozeTestLive.Results, :index
   end
 
   scope "/participant", BlanksWeb do
