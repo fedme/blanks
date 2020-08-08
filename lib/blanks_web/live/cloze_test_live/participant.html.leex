@@ -2,12 +2,12 @@
 
   <header class="bg-white shadow">
     <div class="flex justify-between items-center max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-      <h1 class="block text-3xl font-bold leading-tight text-gray-900"><%= @cloze_test.name %></h1>
+      <h1 class="block text-lg sm:text-2xl md:text-3xl font-bold leading-tight text-gray-900"><%= @cloze_test.name %></h1>
       <%= submit "Submit", phx_disable_with: "Submitting...", class: "block bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded" %>
     </div>
   </header>
 
-  <div class="max-w-7xl mx-auto pt-4 sm:px-6 lg:px-8">
+  <div class="max-w-7xl mx-auto pt-4 px-4 sm:px-6 lg:px-8">
     <div class="pt-2">
       <div class="w-full">
         <p class="bg-teal-100 p-4 rounded font-light text-gray-600">Please fill the blanks in the text and click on <strong>Submit</strong> when all of them are filled.</p>
