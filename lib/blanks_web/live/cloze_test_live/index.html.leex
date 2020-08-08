@@ -20,7 +20,7 @@
             </div>
 
             <div class="flex p-2 items-center">
-              <%= link "Delete", to: "#", phx_click: "delete", phx_value_id: cloze_test.id, data: [confirm: "Are you sure?"], class: "block mr-4 text-red-700 hover:text-red-600" %>
+              <%= link "Delete", to: "#", phx_click: "delete", phx_value_id: cloze_test.id, data: [confirm: "Are you sure?"], class: "block mr-4 text-red-700 hover:text-red-800" %>
               <%= live_redirect "Results", to: Routes.cloze_test_results_path(@socket, :index, cloze_test), class: "block bg-teal-500 hover:bg-teal-600 text-white font-semibold py-1 px-2 rounded" %>
             </div>
           </div>
