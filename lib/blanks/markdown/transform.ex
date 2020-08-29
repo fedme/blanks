@@ -36,7 +36,7 @@ defmodule Blanks.Markdown.Transform do
     ++ attributes
   end
   defp add_cloze_test_blank_attributes(attributes, %{mode: :results, blank_id: blank_id, fillings: fillings, selected_blank_id: selected_blank_id}) do
-    most_chosen_filling = fillings |> Map.get(blank_id, {"", 1}) |> Enum.at(0) |> elem(0)
+    most_chosen_filling = fillings |> Map.get(blank_id, [{"", 1}]) |> Enum.at(0) |> elem(0)
     css_class = "hover:bg-teal-300 text-gray-900 font-semibold w-32 px-1 mr-1 cursor-pointer"
     css_class = if selected_blank_id == blank_id, do: "bg-teal-200 #{css_class}", else: "bg-gray-100 #{css_class}"
     [
