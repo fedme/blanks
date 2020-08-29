@@ -30,14 +30,17 @@ defmodule Blanks.Markdown.Transform do
     [
       {"value", value},
       {"disabled", "true"},
-      {"class", "bg-gray-200 text-gray-400 w-32 px-1 mr-1"}
+      {"class", "bg-gray-200 text-gray-400 w-32 px-1 mr-1"},
+      {"phx-debounce", "500"}
     ]
     ++ attributes
   end
-  defp add_cloze_test_blank_attributes(attributes, %{mode: :results, blank_id: blank_id, fillings: fillings}) do
+  defp add_cloze_test_blank_attributes(attributes, %{mode: :results, blank_id: blank_id, fillings: fillings, selected_blank_id: selected_blank_id}) do
     most_chosen_filling = fillings |> Map.get(blank_id, {"", 1}) |> Enum.at(0) |> elem(0)
+    css_class = "hover:bg-teal-300 text-gray-900 font-semibold w-32 px-1 mr-1 cursor-pointer"
+    css_class = if selected_blank_id == blank_id, do: "bg-teal-200 #{css_class}", else: "bg-gray-100 #{css_class}"
     [
-      {"class", "bg-gray-100 text-blue-800 font-semibold w-32 px-1 mr-1"},
+      {"class", css_class},
       {"phx-click", "blank-clicked"},
       {"phx-value-blank_id", blank_id},
       {"disabled", "true"},
@@ -47,7 +50,8 @@ defmodule Blanks.Markdown.Transform do
   end
   defp add_cloze_test_blank_attributes(attributes, _options) do
     [
-      {"class", "bg-gray-200 text-gray-900 w-32 px-1 mr-1"}
+      {"class", "bg-gray-200 text-gray-900 w-32 px-1 mr-1"},
+      {"phx-debounce", "500"}
     ]
     ++ attributes
   end
@@ -61,19 +65,19 @@ defmodule Blanks.Markdown.Transform do
   defp _to_html({:comment, _, content, _}, _options, _level, _verbatim) do
     "<!--#{content |> Enum.intersperse("\n")}-->\n"
   end
-  defp _to_html({"a", atts, children, _}, %{is_cloze_test: true, mode: mode} = options, _level, _verbatim) do
+  defp _to_html({"a", atts, children, _}, %{is_cloze_test: true, mode: mode, selected_blank_id: selected_blank_id} = options, _level, _verbatim) do
     blank_id = atts |> Enum.into(%{}) |> Map.get("href", "")
     attributes = [
       {"type", "text"},
       {"name", blank_id},
-      {"autocomplete", "off"},
-      {"phx-debounce", "500"}
+      {"autocomplete", "off"}
     ]
     |> add_cloze_test_blank_attributes(%{
       mode: mode,
       blank_id: blank_id,
       value: Enum.at(children, 0, ""),
-      fillings: Map.get(options, :fillings, %{})
+      fillings: Map.get(options, :fillings, %{}),
+      selected_blank_id: selected_blank_id
     })
 
     open_tag("input", attributes)
