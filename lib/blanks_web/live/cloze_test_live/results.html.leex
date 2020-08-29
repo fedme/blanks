@@ -19,7 +19,7 @@
       </div>
 
       <div class="cloze-results w-full md:w-1/3 p-2 md:p-4 pt-1 border-l-2">
-        <%= for {filling, i} <- Map.get(@fillings, @selected_blank_id) |> Enum.with_index() do %>
+        <%= for {filling, i} <- Map.get(@fillings, @selected_blank_id, []) |> Enum.with_index() do %>
           <p class="<%= Enum.at(@word_styles, i, "text-base") %>">
             <%= elem(filling, 0)  %> (<%= elem(filling, 1)  %>)
           </p>
