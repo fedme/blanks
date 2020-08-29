@@ -65,7 +65,7 @@ defmodule Blanks.Markdown.Transform do
   defp _to_html({:comment, _, content, _}, _options, _level, _verbatim) do
     "<!--#{content |> Enum.intersperse("\n")}-->\n"
   end
-  defp _to_html({"a", atts, children, _}, %{is_cloze_test: true, mode: mode, selected_blank_id: selected_blank_id} = options, _level, _verbatim) do
+  defp _to_html({"a", atts, children, _}, %{is_cloze_test: true, mode: mode} = options, _level, _verbatim) do
     blank_id = atts |> Enum.into(%{}) |> Map.get("href", "")
     attributes = [
       {"type", "text"},
@@ -77,7 +77,7 @@ defmodule Blanks.Markdown.Transform do
       blank_id: blank_id,
       value: Enum.at(children, 0, ""),
       fillings: Map.get(options, :fillings, %{}),
-      selected_blank_id: selected_blank_id
+      selected_blank_id: Map.get(options, :selected_blank_id)
     })
 
     open_tag("input", attributes)
