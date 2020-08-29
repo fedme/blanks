@@ -7,29 +7,25 @@
 
 <div class="max-w-7xl mx-auto pt-4 px-4 sm:px-6 lg:px-8">
   <div class="pt-2">
-    <div class="w-full">
-      <p class="font-light text-gray-600">Here are the results.</p>
 
-      <div class="mt-4">
-        <p class="font-semibold text-gray-800"> Raw data (WIP): </p>
-        <%= for blank_id <- @blanks_ids do %>
-          <div>
-            blank with ID <%= blank_id %>:
-            <%= for filling <- Map.get(@fillings, blank_id) do %>
-              [<%= elem(filling, 0)  %>, <%= elem(filling, 1)  %>],
-            <% end %>
-          </div>
-        <% end %>
-      </div>
+    <p class="font-light text-gray-500 py-2">Click on one of the blanks to see what words were used to fill it.</p>
 
-      Selected: <%= @selected_blank_id %>
+    <div class="md:flex w-full mt-4">
 
-      <div class="cloze-preview w-full mt-8">
-        <article class="w-full prose">
+      <div class="cloze-preview w-full md:w-1/2 md:pl-0 pt-0">
+         <article class="w-full prose">
           <%= raw(@cloze_test_html) %>
         </article>
       </div>
-    </div>
 
+      <div class="cloze-results w-full md:w-1/2 p-2 md:p-4 pt-1">
+        <%= for {filling, i} <- Map.get(@fillings, @selected_blank_id) |> Enum.with_index() do %>
+          <p class="<%= Enum.at(@word_styles, i, "text-base") %>">
+            <%= elem(filling, 0)  %> (<%= elem(filling, 1)  %>)
+          </p>
+        <% end %>
+      </div>
+
+    </div>
   </div>
 </div>

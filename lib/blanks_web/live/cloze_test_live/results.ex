@@ -4,6 +4,8 @@ defmodule BlanksWeb.ClozeTestLive.Results do
   alias Blanks.ClozeTests
   alias Blanks.Accounts
 
+  @word_styles ["text-4xl font-bold", "text-3xl", "text-2xl", "text-xl", "text-lg"]
+
   @impl true
   def mount(_params, session, socket) do
     current_user = Accounts.get_user_by_session_token(session["user_token"])
@@ -11,6 +13,7 @@ defmodule BlanksWeb.ClozeTestLive.Results do
       |> assign(:page_title, "Results")
       |> assign(:user_id, current_user.id)
       |> assign(:cloze_test_html, "")
+      |> assign(:word_styles, @word_styles)
     {:ok, socket}
   end
 
