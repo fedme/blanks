@@ -25,6 +25,33 @@ defmodule Blanks.Markdown.Transform do
     to_html(ast, options1)
   end
 
+  # Cloze test transformations
+  defp add_cloze_test_blank_attributes(attributes, %{mode: :preview, value: value}) do
+    [
+      {"value", value},
+      {"disabled", "true"},
+      {"class", "bg-gray-200 text-gray-400 w-32 px-1 mr-1"}
+    ]
+    ++ attributes
+  end
+  defp add_cloze_test_blank_attributes(attributes, %{mode: :results, blank_id: blank_id, fillings: fillings}) do
+    most_chosen_filling = fillings |> Map.get(blank_id, {"", 1}) |> Enum.at(0) |> elem(0)
+    [
+      {"class", "bg-gray-100 text-blue-800 font-semibold w-32 px-1 mr-1"},
+      {"phx-click", "blank-clicked"},
+      {"phx-value-blank_id", blank_id},
+      {"disabled", "true"},
+      {"value", most_chosen_filling}
+    ]
+    ++ attributes
+  end
+  defp add_cloze_test_blank_attributes(attributes, _options) do
+    [
+      {"class", "bg-gray-200 text-gray-900 w-32 px-1 mr-1"}
+    ]
+    ++ attributes
+  end
+
 
   defp to_html(ast, options) do
     _to_html(ast, options, Map.get(options, :initial_indent, 0))|> IO.iodata_to_binary
@@ -34,21 +61,23 @@ defmodule Blanks.Markdown.Transform do
   defp _to_html({:comment, _, content, _}, _options, _level, _verbatim) do
     "<!--#{content |> Enum.intersperse("\n")}-->\n"
   end
-
-  defp _to_html({"a", atts, children, _}, %{is_cloze_test: true, is_preview: is_preview}, _level, _verbatim) do
+  defp _to_html({"a", atts, children, _}, %{is_cloze_test: true, mode: mode} = options, _level, _verbatim) do
+    blank_id = atts |> Enum.into(%{}) |> Map.get("href", "")
     attributes = [
       {"type", "text"},
-      {"name", atts |> Enum.into(%{}) |> Map.get("href", "")},
+      {"name", blank_id},
       {"autocomplete", "off"},
-      {"phx-debounce", "500"},
-      {"class", "bg-gray-200 #{if is_preview, do: "text-gray-400", else: "text-gray-900"} w-32 px-1 mr-1"}
+      {"phx-debounce", "500"}
     ]
-
-    attributes = if is_preview, do: [{"value", children |> Enum.at(0, "")} | [{"disabled", "true"} | attributes]], else: attributes
+    |> add_cloze_test_blank_attributes(%{
+      mode: mode,
+      blank_id: blank_id,
+      value: Enum.at(children, 0, ""),
+      fillings: Map.get(options, :fillings, %{})
+    })
 
     open_tag("input", attributes)
   end
-
   defp _to_html({tag, atts, children, _}, options, level, verbatim) when tag in @compact_tags do
     [open_tag(tag, atts),
        children

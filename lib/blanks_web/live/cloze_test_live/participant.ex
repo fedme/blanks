@@ -44,6 +44,6 @@ defmodule BlanksWeb.ClozeTestLive.Participant do
 
   defp markdown_to_html(content) do
     {:ok, ast, []} = EarmarkParser.as_ast(content) # TODO: handle errors
-    Blanks.Markdown.Transform.transform(ast, is_cloze_test: true, is_preview: false)
+    Blanks.Markdown.Transform.transform(ast, is_cloze_test: true, mode: :test)
   end
 end
