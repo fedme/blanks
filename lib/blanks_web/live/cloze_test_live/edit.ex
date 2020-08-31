@@ -31,7 +31,7 @@ defmodule BlanksWeb.ClozeTestLive.Edit do
 
   @impl true
   def handle_params(_, _, socket) do
-    initial_values = %{name: "New Test", content: "# This is a title\nThe [food](1) is [great](2) *here*.", user_id: socket.assigns.user_id}
+    initial_values = %{name: "New Test", content: "# This is a title\nThe food is [great](838YBkQAj) *here*.", user_id: socket.assigns.user_id}
     preview_html = initial_values.content |> markdown_to_html()
 
     {:noreply,

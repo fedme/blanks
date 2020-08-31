@@ -30,7 +30,7 @@ defmodule Blanks.Markdown.Transform do
     [
       {"value", value},
       {"disabled", "true"},
-      {"class", "bg-gray-200 text-gray-400 w-32 px-1 mr-1"},
+      {"class", "bg-gray-200 text-gray-300 w-32 px-1 mr-1"},
       {"phx-debounce", "500"}
     ]
     ++ attributes
