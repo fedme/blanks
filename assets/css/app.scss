@@ -1,5 +1,7 @@
 /* This file is for your main application css. */
 
+@import "../node_modules/easymde/dist/easymde.min.css";
+
 @tailwind base;
 
 @tailwind components;
@@ -7,6 +9,23 @@
 @tailwind utilities;
 
 @import "../node_modules/nprogress/nprogress.css";
+
+.icon-insert-blank {
+  width: auto !important;
+  background-color: #2d3748 !important;
+  color: white !important;
+  padding-left: 6px !important;
+  padding-right: 6px !important;
+  font-weight: 600;
+}
+
+.icon-insert-blank:hover {
+  background-color: #1a202c !important;
+}
+
+.icon-insert-blank:before {
+  content: 'insert blank';
+}
 
 .cloze-editor {
   @apply w-full flex flex-col items-baseline justify-around;
