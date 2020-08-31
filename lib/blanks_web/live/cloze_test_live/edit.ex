@@ -43,17 +43,10 @@ defmodule BlanksWeb.ClozeTestLive.Edit do
   end
 
   @impl true
-  def handle_event("editor-change", %{"cloze_test" => params}, socket) do
-    # changeset =
-    #   %ClozeTest{}
-    #   |> ClozeTests.change_cloze_test(params)
-    #   |> Map.put(:action, :insert)
-
-    preview_html = Map.get(params, "content", "") |> markdown_to_html()
-
+  def handle_event("content-changed", content, socket) do
+    preview_html = markdown_to_html(content)
     {:noreply,
       socket
-      # |> assign(:changeset, changeset)
       |> assign(:preview_html, preview_html)}
   end
 
@@ -68,12 +61,6 @@ defmodule BlanksWeb.ClozeTestLive.Edit do
         socket = assign(socket, changeset: changeset)
         {:noreply, socket}
     end
-  end
-
-
-  def handle_event("preview-change", values, socket) do
-    IO.inspect(values)
-    {:noreply, socket}
   end
 
   defp page_title(:new), do: "New cloze test"

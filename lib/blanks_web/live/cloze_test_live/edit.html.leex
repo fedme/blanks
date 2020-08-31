@@ -1,13 +1,20 @@
-<%= f = form_for @changeset, "#",
-                  phx_submit: "editor-submit",
-                  phx_change: "editor-change" %>
+<%= f = form_for @changeset, "#", phx_submit: "editor-submit" %>
 
   <header class="bg-white shadow">
-    <div class="flex justify-between items-center max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-      <h1 class=" block text-lg sm:text-2xl md:text-3xl font-bold leading-tight text-gray-900"><%= @page_title %></h1>
-      <div class="flex items-center mb-2">
-        <div class="mr-4 hover:text-blue-800"><%= live_redirect "Back", to: Routes.cloze_test_index_path(@socket, :index) %></div>
-        <%= submit "Save", phx_disable_with: "Saving...", class: "block bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded" %>
+    <div class="flex max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+      <div class="flex-1">
+        <%= text_input f, :name,
+                            placeholder: "Name",
+                            autocomplete: "off",
+                            phx_debounce: "2000",
+                            class: "form-input w-full text-md font-semibold" %>
+        <%= error_tag f, :name %>
+      </div>
+      <div class="flex-1 items-end">
+        <div class="flex flex-row justify-end items-center mb-2">
+          <div class="mr-4 hover:text-blue-800"><%= live_redirect "Back", to: Routes.cloze_test_index_path(@socket, :index) %></div>
+          <%= submit "Save", phx_disable_with: "Saving...", class: "block bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded" %>
+        </div>
       </div>
     </div>
   </header>
@@ -15,30 +22,22 @@
   <div class="max-w-7xl mx-auto pt-4 px-4 sm:px-6 lg:px-8">
     <div class="pt-2">
 
-      <p class="font-light text-gray-500">Write your text usign Markdown syntax.<br />Surround words with <span class="p-1 font-mono">[word](aUniqueNumber)</span> to turn them into blanks.</p>
-
       <div class="md:flex w-full mt-4">
         <div class="cloze-editor w-full md:w-1/2 md:pl-0 pt-0">
-            <div class="field">
-              <%= text_input f, :name,
-                              placeholder: "Name",
-                              autocomplete: "off",
-                              phx_debounce: "2000",
-                              class: "form-input" %>
-              <%= error_tag f, :name %>
-            </div>
-            <div class="field">
+
+            <div class="field" phx-update="ignore">
               <%= textarea f, :content,
                               rows: 12,
                               placeholder: "Content",
                               autocomplete: "off",
                               phx_debounce: "500",
-                              class: "w-full resize-y border rounded focus:outline-none focus:shadow-outline px-2 py-1" %>
-              <%= error_tag f, :content %>
+                              id: "markdown-editor",
+                              phx_hook: "MarkdownEditor" %>
             </div>
+            <%= error_tag f, :content %>
 
             <%= if @cloze_test_id != :new do %>
-              <div class="w-full bg-green-100 rounded p-4 text-gray-800">
+              <div class="w-full bg-green-100 rounded mt-4 p-4 text-gray-800">
                 <span class="font-semibold">Give participants the following URL:</span><br />
                 <a class="font-thin font-xs" href="<%= Routes.cloze_test_participant_url(@socket, :edit, @cloze_test_id) %>" target="_blank">
                   <%= Routes.cloze_test_participant_url(@socket, :edit, @cloze_test_id) %>
@@ -47,7 +46,7 @@
             <% end %>
         </div>
 
-        <div class="cloze-preview w-full md:w-1/2 p-2 md:p-4 pt-1">
+        <div class="cloze-preview w-full md:w-1/2 p-2 md:p-4 pt-1 md:pl-12">
           <article class="w-full prose">
             <%= raw(@preview_html) %>
           </article>
